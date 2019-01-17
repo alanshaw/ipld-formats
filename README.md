@@ -1,4 +1,4 @@
-# libp2p-formats
+# ipld-formats
 
 > Tool to create a directory with all the configured IPLD format modules and all their versions for adding to IPFS
 
