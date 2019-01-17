@@ -36,27 +36,27 @@ async function main (options) {
   for (var i = 0; i < FormatsData.length; i++) {
     const { name, dist } = FormatsData[i]
 
-    spinner.start(`Determining missing versions for ${name}`)
-    const missingVersions = await getMissingVersions(npm, name, modules[name])
-    spinner.succeed(`Found ${missingVersions.length} missing versions for ${name}`)
-    if (missingVersions.length) spinner.info(missingVersions.join(', '))
+    spinner.start(`Determining updated versions for ${name}`)
+    const updatedVersions = await getUpdatedVersions(npm, name, modules[name])
+    spinner.succeed(`Found ${updatedVersions.length} updated versions for ${name}`)
+    if (updatedVersions.length) spinner.info(updatedVersions.join(', '))
 
-    for (var j = 0; j < missingVersions.length; j++) {
-      const missingVersion = missingVersions[j]
+    for (var j = 0; j < updatedVersions.length; j++) {
+      const updatedVersion = updatedVersions[j]
       const installPath = await mkTmpDir()
 
       try {
-        spinner.info(`Installing ${name}@${missingVersion} to ${installPath}`)
-        await install(npm, name, missingVersions[j], installPath)
-        spinner.succeed(`Installed ${name}@${missingVersion} to ${installPath}`)
+        spinner.info(`Installing ${name}@${updatedVersion} to ${installPath}`)
+        await install(npm, name, updatedVersion[j], installPath)
+        spinner.succeed(`Installed ${name}@${updatedVersion} to ${installPath}`)
 
-        const moduleOutPath = Path.join(outPath, `${name}@${missingVersion}`)
+        const moduleOutPath = Path.join(outPath, `${name}@${updatedVersion}`)
         spinner.start(`Moving browser build to ${moduleOutPath}`)
         await Fs.rename(Path.join(installPath, 'node_modules', name, dist || 'dist'), moduleOutPath)
         spinner.succeed(`Moved browser build to ${moduleOutPath}`)
       } catch (err) {
-        spinner.fail(`Failed to install ${name}@${missingVersion}`)
-        throw err
+        spinner.fail(`Failed to install ${name}@${updatedVersion}`)
+        console.error(err)
       } finally {
         await rimraf(installPath)
       }
@@ -80,12 +80,16 @@ async function getInstalled (path) {
   }, {})
 }
 
-async function getMissingVersions (npm, moduleName, existingVersions) {
+async function getUpdatedVersions (npm, moduleName, existingVersions) {
   existingVersions = existingVersions || []
   const res = await promisify(npm.commands.view)([moduleName, 'time'], true)
   const currentVersion = Object.keys(res)[0]
   const allVersions = Object.keys(res[currentVersion].time).filter(v => Semver.valid(v))
-  return allVersions.filter(v => !existingVersions.includes(v))
+  if (!existingVersions.length) return allVersions
+  const latestExistingVersion = existingVersions.reduce((latest, version) => {
+    return Semver.gt(version, latest) ? version : latest
+  }, existingVersions[0])
+  return allVersions.filter(v => Semver.gt(v, latestExistingVersion))
 }
 
 async function mkTmpDir () {
