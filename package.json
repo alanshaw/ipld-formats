@@ -1,0 +1,42 @@
+{
+  "name": "libp2p-formats",
+  "version": "0.0.0",
+  "description": "All the libp2p formats bundled and deployed for dynamic loading in the browser",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "standard",
+    "update": "node update",
+    "deploy": "jsipfs add -r dist && echo 'Now pin that last hash!'"
+  },
+  "keywords": [
+    "libp2p",
+    "format",
+    "codec",
+    "resolver",
+    "dag-pb",
+    "dag-cbor",
+    "dag-json",
+    "ethereum",
+    "git",
+    "bitcoin",
+    "zcash"
+  ],
+  "author": "Alan Shaw",
+  "license": "MIT",
+  "dependencies": {
+    "npm": "^6.5.0",
+    "ora": "^3.0.0",
+    "rimraf": "^2.6.3",
+    "semver": "^5.6.0",
+    "shortid": "^2.2.14"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  },
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
+  }
+}
