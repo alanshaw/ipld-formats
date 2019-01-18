@@ -1,5 +1,6 @@
 [
   { "name": "ipld-bitcoin" },
+  { "name": "ipld-ethereum" },
   { "name": "ipld-git" },
   { "name": "ipld-zcash" }
 ]
