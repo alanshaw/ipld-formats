@@ -12,7 +12,7 @@ This project extracts browser builds of IPLD format modules and puts them in a d
 
 1. Clone this repo
 1. Install dependencies `npm i`
-1. Add/edit the modules you want to include in the file `formats.json`
+1. Add/edit the modules you want to include in the file `formats.json`. By default the tool assumes the browser build is output in a directory called `dist` for each module, but you can customise it by specifying a `dist` property in the config for a module.
 1. Install any new/missing modules
     ```sh
     npm run update # outputs to the `dist` folder
