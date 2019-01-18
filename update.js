@@ -47,7 +47,7 @@ async function main (options) {
 
       try {
         spinner.info(`Installing ${name}@${updatedVersion} to ${installPath}`)
-        await install(npm, name, updatedVersion[j], installPath)
+        await install(npm, name, updatedVersion, installPath)
         spinner.succeed(`Installed ${name}@${updatedVersion} to ${installPath}`)
 
         const moduleOutPath = Path.join(outPath, `${name}@${updatedVersion}`)
@@ -103,4 +103,7 @@ async function install (npm, moduleName, version, path) {
   return promisify(npm.commands.install)(path, [`${moduleName}@${version}`])
 }
 
-main()
+main().catch(err => {
+  console.error(err)
+  process.exit(1)
+})
