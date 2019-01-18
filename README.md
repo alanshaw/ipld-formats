@@ -39,6 +39,7 @@ This project extracts browser builds of IPLD format modules and puts them in a d
     ```
 1. Deploy to IPFS (Basically: `jsipfs add -r dist`)
     ```sh
+    # Start up your `jsipfs daemon` then...
     npm run deploy
     ```
 1. Now pin the last hash to IPFS using pinbot or whatever
