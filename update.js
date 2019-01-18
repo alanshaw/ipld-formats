@@ -13,7 +13,7 @@ async function main (options) {
 
   const spinner = ora()
 
-  spinner.start('Reading formats data')
+  spinner.start('Reading IPLD formats configuration file')
   const formatsDataPath = options.formatsDataPath || Path.join(__dirname, 'formats.json')
   const FormatsData = JSON.parse(await Fs.readFile(formatsDataPath))
   spinner.succeed(`Found ${FormatsData.length} IPLD formats in configuration file`)
