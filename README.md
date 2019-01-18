@@ -28,6 +28,16 @@ This project extracts browser builds of IPLD format modules and puts them in a d
     │   ├── index.js
     │   ├── index.js.map
     │   └── index.min.js
+    ├── ipld-ethereum@2.0.3
+    │   ├── index.js
+    │   ├── index.js.map
+    │   ├── index.min.js
+    │   └── index.min.js.map
+    ├── ipld-git@0.2.3
+    │   ├── index.js
+    │   ├── index.js.map
+    │   ├── index.min.js
+    │   └── index.min.js.map
     ├── ipld-zcash@0.1.5
     │   ├── index.js
     │   ├── index.js.map
